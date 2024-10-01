@@ -1,0 +1,29 @@
+#mainpanel-produtoform{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #53729f7a;
+    height: 100%;
+    width: 100%;
+}
+
+#mainpanel-produtoform table{
+    min-width: 10px;
+    width: 700px;
+    max-height: 400px;
+    overflow: hidden;
+    overflow-y: scroll;
+    border-radius: 6px;
+}
+
+.mainpanel-container{
+    display: flex;
+    gap: 5px;
+    min-width: 700px;
+    min-height: 700px;
+}
+
+table {
+    display: block;
+    overflow: scroll;
+}

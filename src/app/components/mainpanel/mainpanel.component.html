@@ -1,0 +1,64 @@
+<div id="mainpanel-produtoform">
+<div class="mainpanel-container">
+        <div style="display: flex;flex-direction: column; gap: 15px">
+            <mainpanel-expandforms></mainpanel-expandforms>
+        <div style="display: flex;flex-direction: row; gap: 10px;">
+            <div style="overflow-x: auto;">
+                <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+                    <ng-container matColumnDef="id">
+                    <th mat-header-cell *matHeaderCellDef> id </th>
+                    <td mat-cell *matCellDef="let element"> {{element.id}} </td>
+                    </ng-container>
+                    <ng-container matColumnDef="nome">
+                    <th mat-header-cell *matHeaderCellDef> Name </th>
+                    <td mat-cell *matCellDef="let element"> {{element.nome}} </td>
+                    </ng-container>
+                    <ng-container matColumnDef="descricao">
+                    <th mat-header-cell *matHeaderCellDef> descricao </th>
+                    <td mat-cell *matCellDef="let element"> {{element.descricao}} </td>
+                    </ng-container>
+                    <ng-container matColumnDef="preco">
+                    <th mat-header-cell *matHeaderCellDef> preco </th>
+                    <td mat-cell *matCellDef="let element"> {{element.preco}} </td>
+                    </ng-container>
+                    <ng-container matColumnDef="sldAtual">
+                        <th mat-header-cell *matHeaderCellDef> sldAtual </th>
+                        <td mat-cell *matCellDef="let element"> {{element.sldAtual}} </td>
+                    </ng-container>
+                    <ng-container matColumnDef="categoria">
+                        <th mat-header-cell *matHeaderCellDef> categoria </th>
+                        <td mat-cell *matCellDef="let element"> {{element.categoria}} </td>
+                    </ng-container>
+                    <ng-container matColumnDef="actions">
+                        <th mat-header-cell *matHeaderCellDef> </th>
+                        <td mat-cell *matCellDef="let element">
+                            <button mat-mini-fab aria-label="Example icon button with a delete icon" (click)="edit(element)">
+                                <mat-icon>edit</mat-icon>
+                            </button>
+                        </td>
+                    </ng-container>
+                    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                </table>
+            </div>
+            <div style="display: flex; flex-direction: column; gap: 10px;">
+                <button mat-fab extended aria-label="Example icon button with a heart icon" (click)="getProdutos()">
+                    <mat-icon>autorenew</mat-icon>
+                    Reload
+                </button>
+                <form [formGroup]="uploadForm" (ngSubmit)="onSubmit()">
+                    <input type="file" id="fileInput" (change)="onFileSelected($event)" accept=".csv" required hidden>
+                    <button mat-fab extended type="submit" (click)="triggerButton()" aria-label="Example icon button with a heart icon">
+                        <mat-icon>file_upload</mat-icon>
+                        .CSV de Produtos
+                    </button>
+                </form>
+                <button mat-fab extended aria-label="Example icon button with a heart icon" (click)="logOut()">
+                    <mat-icon>logout</mat-icon>
+                    Logout
+                </button>
+            </div>    
+        </div>
+    </div>
+</div>
+</div>

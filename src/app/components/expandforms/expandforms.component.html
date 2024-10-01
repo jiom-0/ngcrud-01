@@ -1,0 +1,61 @@
+<mat-accordion class="example-headers-align" multi>
+    <!-- <mat-expansion-panel>
+      <mat-expansion-panel-header>
+        <mat-panel-title> Cadastro de Pessoas </mat-panel-title>
+        <mat-panel-description>
+          <mat-icon>account_circle</mat-icon>
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+  
+      <mat-form-field>
+        <mat-label>First name</mat-label>
+        <input matInput />
+      </mat-form-field>
+  
+      <mat-form-field>
+        <mat-label>Age</mat-label>
+        <input matInput type="number" min="1" />
+      </mat-form-field>
+    </mat-expansion-panel> -->
+    <mat-expansion-panel [expanded]="isExpandedProduto" (opened)="isExpandedProduto = true" (closed)="isExpandedProduto = false">
+      <mat-expansion-panel-header>
+        <mat-panel-title id="panelProdutos"> Cadastro de Produtos</mat-panel-title>
+        <mat-panel-description>
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+      <mat-form-field>
+        <mat-label>Id</mat-label>
+        <input matInput [(ngModel)]="id" readonly id="idInput" />
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Nome</mat-label>
+        <input matInput [(ngModel)]="nome" />
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Descrição</mat-label>
+        <input matInput [(ngModel)]="descricao" />
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Preço</mat-label>
+        <input matInput [(ngModel)]="preco" />
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Quantidade Atual</mat-label>
+        <input matInput [(ngModel)]="sldAtual" />
+      </mat-form-field>
+      <div style="display: flex; gap: 10px; flex-direction: row;">
+        <button mat-fab extended (click) = "limparCampos()">
+            <mat-icon>clear</mat-icon>
+            Limpar campos
+        </button>
+        <button mat-fab extended (click) = "confirmarProduto()">
+            <mat-icon>done</mat-icon>
+            Confirmar
+        </button>
+        <button mat-fab extended (click) = "excluirProduto()">
+            <mat-icon>clear</mat-icon>
+            Excluir Produto
+        </button>
+      </div> 
+    </mat-expansion-panel>
+  </mat-accordion>
