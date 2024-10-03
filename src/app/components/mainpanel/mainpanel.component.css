@@ -9,7 +9,7 @@
 
 #mainpanel-produtoform table{
     min-width: 10px;
-    width: 700px;
+    width: 900px;
     max-height: 400px;
     overflow: hidden;
     overflow-y: scroll;
@@ -22,6 +22,22 @@
     min-width: 700px;
     min-height: 700px;
 }
+
+tr{
+    width: 100%;
+}
+
+
+.column-expand {
+    flex: 1;
+    width: 35%;
+}
+
+.column-medium {
+    flex: 1;
+    width: 20%;
+}
+
 
 table {
     display: block;

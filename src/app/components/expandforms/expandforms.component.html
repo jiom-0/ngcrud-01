@@ -23,7 +23,7 @@
         <mat-panel-description>
         </mat-panel-description>
       </mat-expansion-panel-header>
-      <mat-form-field>
+      <mat-form-field class="size01">
         <mat-label>Id</mat-label>
         <input matInput [(ngModel)]="id" readonly id="idInput" />
       </mat-form-field>
@@ -37,11 +37,15 @@
       </mat-form-field>
       <mat-form-field>
         <mat-label>Preço</mat-label>
-        <input matInput [(ngModel)]="preco" />
+        <input matInput [(ngModel)]="preco" type="number" />
       </mat-form-field>
       <mat-form-field>
         <mat-label>Quantidade Atual</mat-label>
         <input matInput [(ngModel)]="sldAtual" />
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Categoria</mat-label>
+        <input matInput [(ngModel)]="categoria" />
       </mat-form-field>
       <div style="display: flex; gap: 10px; flex-direction: row;">
         <button mat-fab extended (click) = "limparCampos()">
@@ -52,10 +56,11 @@
             <mat-icon>done</mat-icon>
             Confirmar
         </button>
-        <button mat-fab extended (click) = "excluirProduto()">
+        <button mat-fab extended [disabled]="id === undefined" (click) = "excluirProduto()">
             <mat-icon>clear</mat-icon>
-            Excluir Produto
+            Excluir Produto por Id
         </button>
+        <span class="error-msg" id="error-msg-head">{{ error }}</span>
       </div> 
     </mat-expansion-panel>
   </mat-accordion>

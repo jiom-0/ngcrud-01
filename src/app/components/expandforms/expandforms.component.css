@@ -1,3 +1,11 @@
 button{
     padding: 20px 50px;
 }
+
+.size01{
+    max-width: 100px;
+}
+
+.error-msg{
+    color: rgb(255, 0, 0);
+}

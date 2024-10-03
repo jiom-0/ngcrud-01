@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import {ChangeDetectionStrategy, Component, EventEmitter, Output, viewChild} from '@angular/core';
+import {ChangeDetectionStrategy, Component, EventEmitter, Output, viewChild, ChangeDetectorRef } from '@angular/core';
 import { Produto } from '../../main';
 import { FormsModule } from '@angular/forms';
 import {MatButtonModule} from '@angular/material/button';
@@ -41,10 +41,11 @@ export class ExpandformsComponent {
   isExpandedProduto?: boolean;
   categoria?: string;
   produto: Produto = {};
+  error: String = '';
 
   accordion = viewChild.required(MatAccordion);
 
-  constructor(private auth: AuthService){}
+  constructor(private auth: AuthService, private cdr: ChangeDetectorRef ){}
 
   callParentFunction() {
     this.parentFunction.emit(2); 
@@ -61,12 +62,26 @@ export class ExpandformsComponent {
     }
 
     if(this.produto.id){
-      this.auth.editProduto(this.produto.id, this.produto)
+      this.auth.editProduto(this.produto.id, this.produto).subscribe({
+        next: response => {
+          console.log(this.produto.id);
+          this.cdr.detectChanges();
+        },
+        error: (e) => {
+          this.error = e.error;
+          this.cdr.detectChanges();
+        }
+      })
     }else{
       this.auth.addProduto(this.produto).subscribe({
         next: response => {
           this.id = response.id;
           console.log(this.id);
+          this.cdr.detectChanges();
+        },
+        error: (e) => {
+          this.error = e.error;
+          this.cdr.detectChanges();
         }
       });
     }
@@ -80,11 +95,12 @@ export class ExpandformsComponent {
   }
 
   limparCampos(){
-    this.id = undefined,
-    this.nome = undefined,
-    this.descricao = undefined,
-    this.preco = undefined,
-    this.sldAtual = undefined,
-    this.categoria = undefined
+    this.id = undefined;
+    this.nome = undefined;
+    this.descricao = undefined;
+    this.preco = undefined;
+    this.sldAtual = undefined;
+    this.categoria = undefined;
+    this.error = '';
   }
 }

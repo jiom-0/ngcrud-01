@@ -26,7 +26,7 @@ export class AuthService {
     .pipe(
       tap(response => {
         if(typeof window !== 'undefined' && response && response.token) {
-            localStorage.setItem('jwtToken', response.token);
+            this.setToken(response.token);
             this.sendMessage(this.isLoggedIn()?'logado':'');
         }
         }),
@@ -61,6 +61,11 @@ export class AuthService {
     return this.produtoService.apiProdutoPost(produto);
   }
 
+  addProdutoBulk(produtos: Array<Produto>): Observable<any>{
+    this.setHeader();
+    return this.produtoService.apiProdutoPost(); 
+  }
+
   setHeader(){
     this.produtoService.configuration = new Configuration({
       basePath: 'http://localhost:5106',
@@ -71,12 +76,22 @@ export class AuthService {
   }
 
   logout(): void {
-    localStorage.removeItem('jwtToken');
+    if(typeof window !== 'undefined'){
+      localStorage.removeItem('jwtToken');
+    }
     this.sendMessage('logout');
   }
 
-  getToken(): string | null {
-    return localStorage.getItem('jwtToken');
+  setToken(token: string): void {
+    if(typeof window !== 'undefined'){
+      localStorage.setItem('jwtToken', token);
+    }
+  }
+
+  getToken(): string | null | void {
+    if(typeof window !== 'undefined'){
+      return localStorage.getItem('jwtToken');
+    }
   }
 
   isLoggedIn(): boolean {
