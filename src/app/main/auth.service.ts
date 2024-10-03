@@ -6,23 +6,27 @@ import { Configuration } from './configuration';
 import { Produto } from './model/produto';
 import { UsuarioService } from './api/usuario.service';
 import { ProdutoService } from './api/produto.service';
+import { environment } from '../../../environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-  private apiUrl = 'http://localhost:5106/api/login';
+  private loginUrl = 'http://localhost:5000/api/login';
   private messageSource = new Subject<string>();
   public message$ = this.messageSource.asObservable();
 
-  constructor(private http: HttpClient, private usuarioService:UsuarioService, private produtoService: ProdutoService ) {}
+  constructor(private http: HttpClient, private usuarioService: UsuarioService, private produtoService: ProdutoService ) {
+    this.produtoService = new ProdutoService(http, environment.apiUrl, new Configuration());
+    this.usuarioService = new UsuarioService(http, environment.apiUrl, new Configuration());
+  }
 
   login(email: string, passwd: string): Observable<any> {
     const headers = new HttpHeaders({
       'Accept': 'application/json, text/plain, */*',
       'Content-Type': 'application/json',
     });
-    return this.http.post<any>(this.apiUrl, { email, passwd }, { headers })
+    return this.http.post<any>(this.loginUrl, { email, passwd }, { headers })
     .pipe(
       tap(response => {
         if(typeof window !== 'undefined' && response && response.token) {
@@ -63,15 +67,12 @@ export class AuthService {
 
   addProdutoBulk(produtos: Array<Produto>): Observable<any>{
     this.setHeader();
-    return this.produtoService.apiProdutoPost(); 
+    return this.produtoService.apiProdutoBulkPost(produtos); 
   }
 
   setHeader(){
     this.produtoService.configuration = new Configuration({
-      basePath: 'http://localhost:5106',
-      credentials: {
-        "Bearer": "Bearer "+this.getToken(),
-      }
+      apiKeys: {"Authorization": "Bearer " + this.getToken()},
     });
   }
 

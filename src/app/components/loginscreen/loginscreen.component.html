@@ -2,11 +2,11 @@
 <mat-card class="example-card" appearance="outlined">
     <mat-form-field>
         <mat-label>Login (teste&#64;email.com)</mat-label>
-        <input matInput [(ngModel)]="email">
+        <input matInput [(ngModel)]="email" (keydown.enter)="onLogin()">
     </mat-form-field>
     <mat-form-field>
       <mat-label>Senha (senha123)</mat-label>
-      <input matInput [(ngModel)]="senha" [type]="hidePasswd() ? 'password' : 'text'" />
+      <input matInput [(ngModel)]="senha" [type]="hidePasswd() ? 'password' : 'text'" (keydown.enter)="onLogin()"/>
       <button
         mat-icon-button
         matSuffix

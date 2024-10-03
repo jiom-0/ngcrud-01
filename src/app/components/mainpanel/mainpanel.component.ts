@@ -78,14 +78,19 @@ export class MainpanelComponent {
             id: Number(columns[0]),
             nome: columns[3],
             descricao: columns[2],
-            preco: Number(columns[4])/100,
+            preco:  Number(columns[4])/100,
             categoria: columns[1],
             sldAtual: Number(columns[5]?.match(/\d+/g)?.join(''))
           })
           return true;
         }
       );
-      console.log(this.fileProdutos);
+      this.auth.addProdutoBulk(this.fileProdutos).subscribe({
+        next: response => console.log(response),
+        error: (e) => {
+          console.log(e);
+        }
+      });
       };
       reader.readAsText(file);
 
@@ -130,6 +135,7 @@ export class MainpanelComponent {
     this.expandForms.descricao = element.descricao;
     this.expandForms.preco = element.preco;
     this.expandForms.sldAtual = element.sldAtual;
+    this.expandForms.categoria = element.categoria;
 
     if(!this.expandForms.isExpandedProduto){
       (document.getElementById('panelProdutos') as HTMLInputElement).click()
